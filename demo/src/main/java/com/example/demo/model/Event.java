@@ -1,0 +1,38 @@
+package com.example.demo.model;
+
+public class Event {
+    private int id;
+    private String name;
+    private String location;
+    public Event(){}
+
+    public Event(int id, String name, String location){
+        this.id=id;
+        this.name=name;
+        this.location=location;
+    }
+    public int getID(){
+        return id;
+    }
+
+    public void setID(int id){
+        this.id= id;
+    }
+
+    public String getName(){
+        return name;
+    }
+    public void setName(String name){
+        this.name=name;
+    }
+
+    public String getLocation(){
+        return location;
+    }
+
+    public void setLocation(String location){
+        this.location=location;
+    }
+
+
+}
