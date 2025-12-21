@@ -29,5 +29,11 @@ public class StudentService {
         return Students.removeIf(e->e.getID()==id);
     }
 
+    //Checking if exists
+    public boolean existsById(int id){
+        return Students.stream()
+            .anyMatch(s->s.getID()==id);
+    }
+
     
 }

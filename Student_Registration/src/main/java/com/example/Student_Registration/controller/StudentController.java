@@ -37,6 +37,25 @@ public class StudentController {
 
     @PostMapping("/addStudent")
     public ResponseEntity<?> addStudent(@RequestBody Student s){
+        //400 BAD Request [validation fails]
+        if(s.getName()==null || s.getName().isEmpty() ||
+           s.getCourse()==null || s.getCourse().isEmpty()){
+            //did not check id cause: since it is primitive it will always have value
+            //java will convert it to 0, cause int type cannot have Null value
+
+            return ResponseEntity
+                        .status(HttpStatus.BAD_REQUEST)
+                        .body("Name and Course cannot be empty");
+        }
+
+        //409 Conflict [Student with id already exists]
+        if(sService.existsById(s.getID())){
+            return ResponseEntity
+                        .status(HttpStatus.CONFLICT)
+                        .body("Student with this ID already exists");
+        }
+
+        //201 Created
         return new ResponseEntity<>(sService.addStudent(s),HttpStatus.CREATED);
     }
 
