@@ -25,7 +25,6 @@ public class StudentController {
     }
 
     @GetMapping("/{id}")
-    //using question mark ttp
     public ResponseEntity<?> getStudentByID(@PathVariable("id") int id){
         Student student = sService.getStudentByID(id);
         if (student == null) {
@@ -40,7 +39,7 @@ public class StudentController {
         //400 BAD Request [validation fails]
         if(s.getName()==null || s.getName().isEmpty() ||
            s.getCourse()==null || s.getCourse().isEmpty()){
-            //did not check id cause: since it is primitive it will always have value
+            //did not check id cause- since it is primitive it will always have value
             //java will convert it to 0, cause int type cannot have Null value
 
             return ResponseEntity
@@ -61,7 +60,16 @@ public class StudentController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteStudent(@PathVariable("id") int id){
-        return ResponseEntity.ok(sService.deleteStudent(id));
+        //since in service delete returns true or false we check that
+        boolean deleted = sService.deleteStudent(id);
+
+        if(!deleted){
+            return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body("Student not found");
+        }
+        
+        return ResponseEntity.status(HttpStatus.OK).body("Student deleted");
     }
 
 
